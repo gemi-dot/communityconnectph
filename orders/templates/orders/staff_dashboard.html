@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Dashboard - Water Refill Requests{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>🚚 Staff Dashboard - Water Refill Requests</h2>
+    <a href="{% url 'admin:index' %}" class="btn btn-secondary">Admin Panel</a>
+</div>
+
+{% if requests %}
+<div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Container</th>
+                <th>Quantity</th>
+                <th>Delivery Time</th>
+                <th>Status</th>
+                <th>Station</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.name }}</td>
+                <td>{{ request.container_type }}</td>
+                <td>{{ request.quantity }}</td>
+                <td>{{ request.preferred_delivery_time }}</td>
+                <td>
+                    {% if request.status == 'Pending' %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    {% elif request.status == 'Assigned' %}
+                        <span class="badge bg-info text-dark">Assigned</span>
+                    {% elif request.status == 'Completed' %}
+                        <span class="badge bg-success">Completed</span>
+                    {% endif %}
+                </td>
+                <td>{{ request.assigned_station.name|default:"—" }}</td>
+                <td>
+                    <a href="{% url 'update_request' request.pk %}" class="btn btn-sm btn-outline-primary">
+                        Update
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <div class="alert alert-info">No requests found.</div>
+{% endif %}
+{% endblock %}

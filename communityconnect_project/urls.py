@@ -18,10 +18,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from orders import views_staff  # ✅ ADD THIS LINE
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('', include('core.urls')),
     path('', include('pages.urls')),  # This will handle the homepage and other pages
+
+    path('orders/', include('orders.urls')),  # 👈 include orders app
+
+    path('staff/dashboard/', views_staff.staff_dashboard, name='staff_dashboard'),  # direct shortcut
+    path('staff/request/<int:pk>/update/', views_staff.update_request, name='update_request'),
+
 ]
 
 

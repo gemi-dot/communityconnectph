@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'pages',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,10 @@ ROOT_URLCONF = 'communityconnect_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'core/templates'],
+        #'DIRS': [BASE_DIR / 'core/templates'],
+
+        'DIRS': [BASE_DIR / 'templates'],  # ✅ global templates folder
+        
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
